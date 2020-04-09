@@ -1,0 +1,9 @@
+.menu {
+  grid-area: menu;
+  background-color: blue;
+}
+
+.menu a {
+  color: white;
+  text-decoration: none;
+}

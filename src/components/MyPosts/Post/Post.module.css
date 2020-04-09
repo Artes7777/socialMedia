@@ -1,0 +1,19 @@
+img {
+  height: 40px;
+}
+
+.post {
+  display: grid;
+  grid-template-areas: 
+  "img msg";
+  grid-template-columns: 80px 10fr
+}
+
+.img {
+  grid-area: img;
+}
+
+.message {
+  grid-area: msg
+}
+
