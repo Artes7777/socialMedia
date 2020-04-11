@@ -1,3 +1,7 @@
 .content {
   background-color: crimson;
 }
+
+.selected {
+  font-weight: bold;
+}
