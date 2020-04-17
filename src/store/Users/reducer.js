@@ -1,4 +1,4 @@
-import {SET_USERS, FOLOW_USER, UNFOLOW_USER, CHOSE_PAGE, TOGGLE_FETCHING} from './actions';
+import {SET_USERS, FOLOW_USER, UNFOLOW_USER, CHOSE_PAGE, TOGGLE_FETCHING, SET_BUTTON_STATUS} from './actions';
 
 const initialState = {
   users: [],
@@ -6,6 +6,7 @@ const initialState = {
   currentPage: 1,
   totalUsersCount: 50,
   isFetching: false,
+  buttonStatus: [],
 }
 
 export const usersReducer = (state = initialState, action) => {
@@ -44,6 +45,13 @@ export const usersReducer = (state = initialState, action) => {
         return {
           ...state,
           isFetching: action.payload
+        }
+      case SET_BUTTON_STATUS :
+        return {
+          ...state,
+          buttonStatus: action.status ? 
+          [...state.buttonStatus, action.id] :
+          state.buttonStatus.filter(id => id !== action.id )
         }
       default: return state;
   }

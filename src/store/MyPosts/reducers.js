@@ -1,4 +1,4 @@
-import {SET_POST, CLEAN_INPUT, INPUT_CHANGE} from './actions';
+import {SET_POST, CLEAN_INPUT, INPUT_CHANGE, SET_PROFILE_PAGE} from './actions';
 
 const initialState = {
   posts : [
@@ -8,6 +8,7 @@ const initialState = {
     {message: "Go home", like: 0, id: 4},
   ],
   input : "",
+  profilePage: null,
 }
 
 export const myPostsReducer = (state = initialState, action) => {
@@ -30,6 +31,11 @@ export const myPostsReducer = (state = initialState, action) => {
       ...state,
       input: action.payload
     }
+    case SET_PROFILE_PAGE : 
+      return {
+        ...state,
+        profilePage: action.payload
+      }
     default: return state;
   }
 }

@@ -2,9 +2,9 @@ import React from 'react';
 import {Route, BrowserRouter} from 'react-router-dom';
 import './CssDischarge.css';
 import './App.css';
-import Header from './components/Header';
+import HeaderContainer from './components/HeaderContainer';
 import Menu from './components/Menu';
-import Content from './components/Content';
+import WithRouterProfile from './components/Content';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
 import UsersContainer from './components/Users/UsersContainer';
 
@@ -12,9 +12,9 @@ const App = () => {
   return (
     <BrowserRouter>
       <div className="appWrapper">
-        <Header /> 
+        <HeaderContainer /> 
         <Menu />
-        <Route render = { ()=> <Content />} path = "/" exact/>
+        <Route render = { () => <WithRouterProfile/>} path = "/profile/:userId?" />
         <Route component = {DialogsContainer} path = "/dialogs" />
         <Route component = {UsersContainer} path = "/users" />
       </div>

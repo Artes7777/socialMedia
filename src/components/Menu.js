@@ -3,10 +3,11 @@ import m from './Menu.module.css';
 import {NavLink} from 'react-router-dom';
 
 const Menu = () => {
+
   return (
     <div className = {m.menu}>
       <div>
-        <NavLink to = "/">Profile</NavLink>
+        <NavLink to = '/profile'>Profile</NavLink>
       </div>
       <div>
         <NavLink to = "/dialogs">Messages</NavLink>
