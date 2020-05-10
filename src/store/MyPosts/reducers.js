@@ -1,4 +1,4 @@
-import {SET_POST, CLEAN_INPUT, INPUT_CHANGE, SET_PROFILE_PAGE} from './actions';
+import {SET_POST, SET_PROFILE_PAGE, PROFILE_STATUS, SET_AVATAR} from './actions';
 
 const initialState = {
   posts : [
@@ -7,8 +7,8 @@ const initialState = {
     {message: "Whatsap", like: 7, id: 3},
     {message: "Go home", like: 0, id: 4},
   ],
-  input : "",
   profilePage: null,
+  profileStatus: "Ваш статус",
 }
 
 export const myPostsReducer = (state = initialState, action) => {
@@ -21,20 +21,20 @@ export const myPostsReducer = (state = initialState, action) => {
         action.payload
       ]
     }
-    case INPUT_CHANGE :
-      return {
-        ...state,
-        input: action.payload
-      } 
-    case CLEAN_INPUT: 
-    return {
-      ...state,
-      input: action.payload
-    }
     case SET_PROFILE_PAGE : 
       return {
         ...state,
         profilePage: action.payload
+      }
+    case PROFILE_STATUS: 
+      return {
+        ...state,
+        profileStatus : action.payload
+      }
+    case SET_AVATAR :
+      return {
+        ...state,
+        profilePage : {...state.profilePage, photos: action.payload}
       }
     default: return state;
   }

@@ -1,28 +1,27 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {addPost, cleanInput, inputChange} from '../../store/MyPosts/actions';
+import {addPost} from '../../store/MyPosts/actions';
 import MyPosts from './MyPosts';
 
-const MyPostsContainer = () => {
+const MyPostsContainer = (props) => {
 
   const posts = useSelector((state) => state.posts.posts);
-  const input = useSelector((state) => state.posts.input);
   const dispatch = useDispatch();
   
-  const addPostClick = () => {
+  const addPostClick = useCallback( value => {
     const post = {
-      message: input, like: 0, id: 7
+      message: value, like: 0, id: 7
     };
      dispatch(addPost(post));
-     dispatch(cleanInput());
-  }
+  }, [dispatch])
 
-  const onChange = (text) => {
-    dispatch(inputChange(text));
-  }
-
+ 
   return (
-    <MyPosts posts = {posts} value = {input} onChange = {onChange} addPostClick = {addPostClick}/>
+    <MyPosts 
+      posts = {posts} 
+      profilePage = {props.profilePage}
+      addPostClick = {addPostClick}
+    />
   )
 }
 

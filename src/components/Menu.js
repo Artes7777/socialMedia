@@ -1,8 +1,11 @@
 import React from 'react';
 import m from './Menu.module.css';
 import {NavLink} from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const Menu = () => {
+
+  const newMessageCount = useSelector((state) => state.dialogs.newMessageCount)
 
   return (
     <div className = {m.menu}>
@@ -11,6 +14,7 @@ const Menu = () => {
       </div>
       <div>
         <NavLink to = "/dialogs">Messages</NavLink>
+        {newMessageCount ? <span className = {m.newMessage}>{newMessageCount}</span> : null}
       </div>
       <div>
         <NavLink to = "/users">Users</NavLink>

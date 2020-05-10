@@ -1,0 +1,11 @@
+.form input  {
+  border: 2px yellow solid
+}
+
+.form textarea {
+  border: 2px yellow solid
+}
+
+.error {
+  color: yellow
+}

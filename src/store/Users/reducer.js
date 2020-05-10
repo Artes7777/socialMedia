@@ -1,11 +1,13 @@
-import {SET_USERS, FOLOW_USER, UNFOLOW_USER, CHOSE_PAGE, TOGGLE_FETCHING, SET_BUTTON_STATUS} from './actions';
+import {SET_USERS, FOLOW_USER, UNFOLOW_USER, 
+  CHOSE_PAGE, TOGGLE_FETCHING, SET_BUTTON_STATUS, CHANGE_PORTION_NEXT, CHANGE_PORTION_PREVIOUS} from './actions';
 
 const initialState = {
   users: [],
-  pageSize: 5,
+  pageSize: 10,
   currentPage: 1,
   totalUsersCount: 50,
   isFetching: false,
+  currentPortion: 1,
   buttonStatus: [],
 }
 
@@ -14,7 +16,8 @@ export const usersReducer = (state = initialState, action) => {
     case SET_USERS : 
       return {
         ...state,
-        users: action.payload
+        users: action.users,
+        totalUsersCount: action.usersCount
       }
     case FOLOW_USER : 
       return {
@@ -52,6 +55,16 @@ export const usersReducer = (state = initialState, action) => {
           buttonStatus: action.status ? 
           [...state.buttonStatus, action.id] :
           state.buttonStatus.filter(id => id !== action.id )
+        }
+      case CHANGE_PORTION_NEXT : 
+        return {
+          ...state,
+          currentPortion: state.currentPortion + 1
+        }
+        case CHANGE_PORTION_PREVIOUS : 
+        return {
+          ...state,
+          currentPortion: state.currentPortion - 1
         }
       default: return state;
   }

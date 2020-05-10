@@ -1,18 +1,22 @@
-import React, { useEffect } from 'react';
+import React, {useCallback} from 'react';
 import Header from './Header';
-import { useDispatch, useSelector } from 'react-redux';
-import {setMyProfile} from '../store/Auth/actions';
+import {useDispatch, useSelector} from 'react-redux';
+import {logoutProfile} from '../store/Auth/actions';
 
 const HeaderContainer = () => {
   
   const myData = useSelector((state) => state.auth)
   const dispatch = useDispatch();
-  
-  useEffect( () => {
-    dispatch(setMyProfile()) }, [])
-
+ 
+  const logout = useCallback( () => {
+    dispatch(logoutProfile());
+  }, [dispatch])
+ 
     return (
-    <Header myData = {myData} />
+    <Header 
+      myData = {myData}
+      logout = {logout} 
+    />
   )
 }
 

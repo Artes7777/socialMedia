@@ -1,37 +1,48 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import {setMessage, cleanInput, inputChange} from '../../store/Dialogs/actions';
+import {WithAuthRedirect} from '../../HOC/WithAuthRedirect';
+import {getUserMessages, sendUserMessages, getAllUsersDialogs, deleteMyMessage} from '../../store/Dialogs/actions';
 import Dialogs from './Dialogs';
 
-const DialogsContainer = () => {
+const DialogsContainer = (props) => {
   
   const users = useSelector((state) => state.dialogs.users);
   const messages = useSelector((state) => state.dialogs.messages);
-  const input = useSelector((state) => state.dialogs.input);
+  const isFetching = useSelector((state) => state.dialogs.isFetching);
+  const myId = useSelector((state) => state.auth.id);
+  const userId = props.match.params.userId;
   const dispatch = useDispatch();
 
-  const onChange = (text) => {
-    dispatch(inputChange(text))
+  useEffect( () => {
+    if (!userId) {
+      dispatch(getAllUsersDialogs());
+    }
+    else dispatch(getUserMessages(userId))
+  }, [dispatch, userId])
+
+  const sendMessage = (values) => {
+    dispatch(sendUserMessages(userId, values.message));
   }
 
-  const addDialogMessage = () => {
-    const message = {
-      massege: input,
-      id: 8
-    }
-    dispatch(setMessage(message));
-    dispatch(cleanInput());
+  const deleteMessage = (id) => {
+    dispatch(deleteMyMessage(id))
   }
 
   return (
    <Dialogs 
      users = {users} 
+     myId = {myId}
+     deleteMessage = {deleteMessage}
+     isFetching = {isFetching}
+     allDialogs = {userId}
      messages = {messages}  
-     itputValue = {input} 
-     addDialogMessage ={addDialogMessage}
-     onChange = {onChange}
+     sendMessage = {sendMessage}
    />
   )
 }
 
-export default DialogsContainer;
+const WithRouterDialogs = withRouter(DialogsContainer);
+const WithDialogsRedirect = WithAuthRedirect(WithRouterDialogs);
+
+export default WithDialogsRedirect;

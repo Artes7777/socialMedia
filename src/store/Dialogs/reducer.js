@@ -1,40 +1,46 @@
-import {SET_MESSAGE, CLEAN_INPUT, INPUT_CHANGE} from './actions';
+import {SET_MESSAGES, SET_FETCHING, SET_MY_MESSAGE, SET_USERS_DIALOGS, SET_MESSAGE_COUNT, DELETE_MESSAGE} from './actions';
 
 const initialState = {
-  users : [
-    {name: "Вася", id: 1}, 
-    {name: "Петя", id: 2}, 
-    {name: "Витя", id: 3}, 
-    {name: "Гриша", id: 4}, 
-    {name: "Петух", id: 5}, 
-  ],
-  messages : [
-      {massege: "Hello", id: "1"}, 
-      {massege:"How are you?", id: "2"}, 
-      {massege:"Good for you", id: "3"}
-  ],
-  input : "",
+  users : [],
+  messages : [],
+  isFetching: false,
+  newMessageCount: 0
 }
 
 export const myDialogReducer = (state = initialState, action) => {
   switch(action.type) {
-    case SET_MESSAGE : 
+    case SET_MESSAGES : 
     return { 
       ...state,
-      messages: [
-        ...state.messages,
-        action.payload
-      ]
+      messages: action.payload
     }
-    case INPUT_CHANGE :
+    case SET_FETCHING :
       return {
         ...state,
-        input: action.payload
-      } 
-    case CLEAN_INPUT: 
+        isFetching: action.payload
+      }
+    case SET_MY_MESSAGE : 
+      return { 
+        ...state,
+        messages: [
+          ...state.messages,
+          action.payload
+        ]
+      }
+    case SET_USERS_DIALOGS : 
+      return {
+        ...state,
+        users: action.payload
+      }  
+    case SET_MESSAGE_COUNT :
+      return {
+        ...state,
+        newMessageCount: action.payload
+      }
+    case DELETE_MESSAGE : 
     return {
       ...state,
-      input: action.payload
+      messages: state.messages.filter((m) => m.id !== action.payload)
     }
     default: return state;
   }

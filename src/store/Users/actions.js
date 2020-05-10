@@ -6,10 +6,13 @@ export const UNFOLOW_USER = "UNFOLOW_USER";
 export const CHOSE_PAGE = "CHOSE_PAGE";
 export const TOGGLE_FETCHING = "TOGGLE_FETCHING";
 export const SET_BUTTON_STATUS = "SET_BUTTON_STATUS";
+export const CHANGE_PORTION_NEXT = "CHANGE_PORTION_NEXT";
+export const CHANGE_PORTION_PREVIOUS = "CHANGE_PORTION_PREVIOUS";
 
-export const setUsers = (users) => ({
+export const setUsers = (users, usersCount) => ({
   type: SET_USERS,
-  payload: users
+  users,
+  usersCount
 })
 
 export const folowUser = (id) => ({
@@ -38,12 +41,21 @@ export const setButtonStatus = (status, id) => ({
   id : id
 })
 
+export const changePaginatorPortionNext = () => ({
+  type: CHANGE_PORTION_NEXT,
+})
+
+export const changePaginatorPortionPrevious = () => ({
+  type: CHANGE_PORTION_PREVIOUS,
+})
+
+
 export const addUsers = (currentPage, pageSize) => (dispatch) => {
   dispatch(toggleFetching(true));
   API.addUsers(currentPage, pageSize)
   .then((response) => {
     dispatch(toggleFetching(false));
-    dispatch(setUsers(response.data.items));
+    dispatch(setUsers(response.data.items, response.data.totalCount));
   })
 }
 
@@ -68,3 +80,4 @@ export const unfollowUser = (id) => (dispatch) => {
     dispatch(setButtonStatus(false, id));
   })
 }
+

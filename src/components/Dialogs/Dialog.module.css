@@ -1,6 +1,6 @@
 .content {
   display: grid;
-  grid-template-columns: 2fr 10fr;
+  grid-template-columns: 10fr;
   background-color: crimson;
 }
 

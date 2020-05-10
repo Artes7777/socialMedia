@@ -10,20 +10,79 @@ const instance = axios.create({
 
 export const API = {
   follow(id) {
-    return instance.post(`follow/${id}`, {}, {}) },
+    return instance.post(`follow/${id}`, {}, {}) 
+  },
 
   unfollow(id) {
-    return instance.delete(`follow/${id}`, {}) },
+    return instance.delete(`follow/${id}`, {}) 
+  },
   
   addUsers(currentPage, pageSize) {
-    return instance.get(`users?page=${currentPage}&count=${pageSize}`, {}) },
+    return instance.get(`users?page=${currentPage}&count=${pageSize}`, {}) 
+  },
 
   setProfile(userId) {
     return instance.get(`profile/${userId}`)
   },
 
   setAuth() {
-    return  instance.get("auth/me", {})
+    return  instance.get('auth/me', {})
+  },
+
+  setProfileStatus(userId) {
+    return instance.get(`profile/status/${userId}`, {})
+  },
+
+  udpateProfileStatus(status) {
+    return instance.put(`profile/status`, {status: status})
+  },
+
+  login(email, password, rememberMe, captcha) {
+    return instance.post(`/auth/login`, {email, password, rememberMe, captcha})
+  },
+
+  logout() {
+    return instance.delete(`/auth/login`)
+  },
+
+  updateAvatar(photoFile) {
+    const formData = new FormData();
+    formData.append("image", photoFile)
+    return instance.put(`profile/photo`, formData, {headers: {'Content-Type': 'multipart/form-data' }
+    })
+  }, 
+
+  updateProfileInfo(profile) {
+    return instance.put(`profile`, profile)
+  },
+
+  getCaptcha() {
+    return instance.get(`security/get-captcha-url`) 
+  },
+
+  getUsersChat(userId) {
+    return instance.get(`dialogs/${userId}/messages`) 
+  },
+
+  sendMessage(userId, message) {
+    return instance.post(`dialogs/${userId}/messages`, {body: message} )
+  },
+
+  getAlldialogs() {
+    return instance.get(`dialogs`)
+  },
+
+  refreshLastDialogOnTop(userId) {
+    return instance.put(`dialogs/${userId}`)
+  },
+
+  getNewMessageCount() {
+    return instance.get(`dialogs/messages/new/count`)
+  },
+
+  deleteMessage(messageId) {
+    return instance.delete(`dialogs/messages/${messageId}`)
   }
+
 }
 
